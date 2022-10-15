@@ -1,5 +1,3 @@
-from tkinter import CASCADE
-
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -47,5 +45,8 @@ class Follow(models.Model):
         User, on_delete=models.CASCADE, related_name='follower'
     )
     following = models.ForeignKey(
-        User, on_delete=CASCADE, related_name='following'
+        User, on_delete=models.CASCADE, related_name='following'
     )
+
+    class Meta:
+        unique_together = ('user', 'following',)

@@ -12,7 +12,6 @@ User = get_user_model()
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    """Созда"""
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [
@@ -52,7 +51,6 @@ class CreateRetrieveViewSet(
 
 
 class FollowViewSet(CreateRetrieveViewSet):
-    queryset = Follow.objects.all()
     serializer_class = FollowSerializer
     filter_backends = (filters.SearchFilter,)
     permission_classes = [permissions.IsAuthenticated]
@@ -62,7 +60,4 @@ class FollowViewSet(CreateRetrieveViewSet):
         return Follow.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        following = User.objects.get(
-            username=self.request.data['following']
-        )
-        serializer.save(user=self.request.user, following=following)
+        serializer.save(user=self.request.user)
